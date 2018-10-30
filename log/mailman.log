@@ -1,0 +1,6 @@
+I, [2018-10-30T10:44:14.354719 #12048]  INFO -- : Mailman v0.7.3 started
+I, [2018-10-30T10:44:14.354811 #12048]  INFO -- : IMAP receiver enabled (nepalmahan3@gmail.com@imap.gmail.com).
+I, [2018-10-30T10:44:14.365965 #12048]  INFO -- : Polling enabled. Checking every 60 seconds.
+I, [2018-10-30T10:44:24.047749 #12048]  INFO -- : Got new message from 'mail-noreply@google.com' with subject 'Gmail update: Reach more people you know'.
+I, [2018-10-30T10:44:29.357957 #12048]  INFO -- : Got new message from 'noreply@garena.com' with subject 'Garena Email Verification'.
+I, [2018-10-30T10:44:34.585387 #12048]  INFO -- : Got new message from 'noreply@garena.com' with subject 'You requested a new Garena password'.

@@ -1,0 +1,102 @@
+#!/usr/bin/env ruby
+require "rubygems"
+require "bundler/setup"
+require "mailman"
+require 'resolv-replace'
+require 'dotenv/load'
+require 'maildir'
+require 'byebug'
+require 'csv'
+require_relative './../csv_generator.rb'
+
+
+
+Mailman.config.logger = Logger.new("log/mailman.log")
+
+Mailman.config.imap = {
+  server: 'imap.gmail.com',
+  port: 993,
+  ssl: true,
+  username: ENV["GMAIL_USERNAME"],
+  password: ENV["GMAIL_PASSWORD"],
+  folder: "Inbox",
+  filter: "ALL"
+  }
+
+
+
+
+ Mailman::Application.run do
+  default do
+    begin
+      p "Found a new message"
+      p "Mail from: #{message.from}"
+        ch = CsvGenerator.new
+        all_emails = ch.get_message(message)
+      if message.multipart?
+        the_message_html = message.html_part.body.decoded
+        the_message_text = message.text_part.body.decoded
+      else
+        # CSV.open("myfile.csv", "w") do |csv|
+        #   csv << ["row", "of", "emails"]
+        #   my_array.each do |email|
+        #   csv << [my_array]  
+        #   end
+        # end 
+      end
+ 
+
+
+      column_header= ["row of emails"]
+      # my_array.each do |email|
+      #   CSV.open("myfile.csv", "a+", :write_headers => true, :headers => column_header) do |csv|
+      #     column_header = nil #No header after first insertion
+      #     csv << email  
+      #   end 
+      # end
+      all_emails.flatten.each do |email|
+        ch = CsvGenerator.new
+        generated_csv = ch.generate_csv(email)
+      end
+      puts "CSV Generated"
+      the_message_html = message.body.decoded
+      the_message_text = message.body.decoded
+      the_message_attachments = []
+    end
+
+
+
+
+    # map attachments with message object and save other stuff and do other processing or trigger other events..
+   
+    rescue Exception => e
+      Mailman.logger.error "Exception occurred while receiving message:\n#{message}"
+      Mailman.logger.error [e, *e.backtrace].join("\n")
+    end
+    end
+     
+  # def generate_csv(data)
+  #   byebug
+  # end
+
+      
+         
+              
+
+
+  #    CSV.open("myfile.csv", "w") do |csv|
+
+  #    csv << ["row", "of", "emails"]
+  #     csv << [my_array] 
+  # # csv << ["#{email}"]
+
+
+  # CSV.open("myfile.csv", "w") do |csv|
+#   csv << ["row", "of", "CSV", "data"]
+#   csv << [""]
+# end
+
+
+
+  
+ #end
